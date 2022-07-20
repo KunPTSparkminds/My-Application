@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +47,6 @@ public class ApplicationController {
 		return ResponseEntity.ok(applicationService.getApplicationById(id));
 	}
 	
-	// Get all application
     @GetMapping("/pdf")
 	public void generatePdf(HttpServletResponse response) throws DocumentException, IOException {
 		
@@ -63,7 +63,7 @@ public class ApplicationController {
 		generator.generate(response);
 		
 	}
-    // Get detail Application
+    
     @GetMapping("/pdf/{id}")
     public void generatePdfByApplicationId(@PathVariable("id") Long id,HttpServletResponse response) throws DocumentException, IOException {
         
@@ -84,5 +84,11 @@ public class ApplicationController {
     @PostMapping
     public ResponseEntity<ApplicationResponseDTO> createApplication(@Valid @RequestBody ApplicationRequestDTO applicationRequestDTO) {
     	return ResponseEntity.ok(applicationService.createApplication(applicationRequestDTO));
+    }
+    
+    @PutMapping("{id}")
+    public ResponseEntity<ApplicationResponseDTO> updateApplication(@Valid @RequestBody ApplicationRequestDTO applicationRequestDTO,@PathVariable Long id) {
+    	applicationService.updateApplication(id, applicationRequestDTO);
+    	return ResponseEntity.noContent().build();
     }
 }

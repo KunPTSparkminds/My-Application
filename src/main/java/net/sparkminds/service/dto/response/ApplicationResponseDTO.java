@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApplicationResponseDTO {
+	private long id;
 	private String emailAdress;
 	private String name;
 	private String githubUser;

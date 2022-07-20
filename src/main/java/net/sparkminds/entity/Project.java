@@ -12,18 +12,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.sparkminds.entity.enumeration.Capacity;
 import net.sparkminds.entity.enumeration.Mode;
 
 @Entity
 @Data
+@Getter
+@Setter
 @Table(name="project")
 public class Project {
 	@Id

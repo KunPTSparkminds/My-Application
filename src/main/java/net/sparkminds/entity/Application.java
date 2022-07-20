@@ -1,5 +1,6 @@
 package net.sparkminds.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -40,9 +40,19 @@ public class Application {
     private Boolean isDeleted = false;
 
     @OneToMany(mappedBy = "application", cascade = CascadeType.ALL)
-    List<Project> project;
+    private List<Project> project;
     
     @CreationTimestamp
     @Column(name="created_at", nullable = false, updatable = false)
     private Date createdAt;
+    
+    public void addProject(Project pro) {
+    	if (project == null) project = new ArrayList<>();
+    	project.add(pro);
+    	pro.setApplication(this);
+    }
+    
+    public void addProjects(List<Project> projects) {
+    	projects.forEach(this::addProject);
+    }
 }

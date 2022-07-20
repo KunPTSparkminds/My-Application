@@ -21,4 +21,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     @Modifying
     @Query(value="UPDATE Application p SET p.isDeleted = true WHERE p.id = :id", nativeQuery = false)
     int deleteApplicationById(Long id);
+    
 }

@@ -9,4 +9,5 @@ public interface ApplicationService {
 	List<ApplicationResponseDTO> getAllApplication();
 	List<ApplicationResponseDTO> getApplicationById(Long id);
 	ApplicationResponseDTO createApplication(ApplicationRequestDTO applicationRequestDTO);
+	ApplicationResponseDTO updateApplication(Long i8d, ApplicationRequestDTO applicationRequestDTO);
 }
