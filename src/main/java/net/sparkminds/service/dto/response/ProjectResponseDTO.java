@@ -18,6 +18,7 @@ import net.sparkminds.entity.enumeration.Mode;
 @NoArgsConstructor
 @Builder
 public class ProjectResponseDTO {
+	private long id;
 	private String nameProject;
 	private Mode employmentMode;
 	private Capacity capacity;

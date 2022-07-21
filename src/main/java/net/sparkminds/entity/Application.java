@@ -22,37 +22,38 @@ import lombok.Data;
 @Data
 @Table(name = "application")
 public class Application {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
-    @Email
-    @Column(name = "email_address", nullable = false)
-    private String emailAdress;
+	@Email
+	@Column(name = "email_address", nullable = false)
+	private String emailAdress;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-    @Column(name = "github_user", nullable = false)
-    private String githubUser;
+	@Column(name = "github_user", nullable = false)
+	private String githubUser;
 
-    @Column(name = "is_deleted", columnDefinition = "boolean default false")
-    private Boolean isDeleted = false;
+	@Column(name = "is_deleted", columnDefinition = "boolean default false")
+	private Boolean isDeleted = false;
 
-    @OneToMany(mappedBy = "application", cascade = CascadeType.ALL)
-    private List<Project> project;
-    
-    @CreationTimestamp
-    @Column(name="created_at", nullable = false, updatable = false)
-    private Date createdAt;
-    
-    public void addProject(Project pro) {
-    	if (project == null) project = new ArrayList<>();
-    	project.add(pro);
-    	pro.setApplication(this);
-    }
-    
-    public void addProjects(List<Project> projects) {
-    	projects.forEach(this::addProject);
-    }
+	@OneToMany(mappedBy = "application", cascade = CascadeType.ALL)
+	private List<Project> project;
+
+	@CreationTimestamp
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private Date createdAt;
+
+	public void addProject(Project pro) {
+		if (project == null)
+			project = new ArrayList<>();
+		project.add(pro);
+		pro.setApplication(this);
+	}
+
+	public void addProjects(List<Project> projects) {
+		projects.forEach(this::addProject);
+	}
 }

@@ -26,6 +26,7 @@ public class ProjectMapper {
 	public ProjectResponseDTO entityToResponse(Project entity) {
 		if (entity == null) return null;
 		ProjectResponseDTO project = new ProjectResponseDTO();
+		project.setId(entity.getId());
 		project.setNameProject(entity.getNameProject());
 		project.setCapacity(entity.getCapacity());
 		project.setDuration(entity.getDuration());
