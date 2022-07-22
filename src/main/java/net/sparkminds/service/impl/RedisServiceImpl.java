@@ -1,5 +1,7 @@
 package net.sparkminds.service.impl;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,8 @@ import net.sparkminds.service.RedisService;
 public class RedisServiceImpl implements RedisService {
 	private final RedisTemplate<String, Object> redisTemplate;
 	@Override
-	public void cacheJWT(String jwt) {
-		redisTemplate.opsForValue().set(jwt, jwt);
+	public void cacheJWT(String jwt, Long expiratedTime) {
+		redisTemplate.opsForValue().set(jwt, jwt, expiratedTime, TimeUnit.MILLISECONDS);
 	}
 
 }

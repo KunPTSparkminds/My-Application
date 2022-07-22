@@ -39,14 +39,14 @@ public class ApplicationController {
 	private final RedisTemplate<String, Object> template;
 
 	@GetMapping
-	public ResponseEntity<List<ApplicationResponseDTO>> getAllApplication(@RequestHeader HttpHeaders headers) {
-		String token = headers.getFirst(HttpHeaders.AUTHORIZATION);
-		boolean check = template.opsForValue().get(token.split(" ")[1]) == null;
-		if (!check) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		} else {
+	public ResponseEntity<List<ApplicationResponseDTO>> getAllApplication() {
+//		String token = headers.getFirst(HttpHeaders.AUTHORIZATION);@RequestHeader HttpHeaders headers
+//		boolean check = template.opsForValue().get(token.split(" ")[1]) == null;
+//		if (!check) {
+//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//		} else {
 			return ResponseEntity.ok(applicationService.getAllApplication());
-		}
+//		}
 	}
 
 	@GetMapping("{id}")
