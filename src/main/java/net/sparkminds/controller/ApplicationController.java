@@ -9,17 +9,22 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lowagie.text.DocumentException;
 
+import lombok.RequiredArgsConstructor;
 import net.sparkminds.service.ApplicationService;
 import net.sparkminds.service.dto.request.ApplicationRequestDTO;
 import net.sparkminds.service.dto.response.ApplicationResponseDTO;
@@ -27,18 +32,21 @@ import net.sparkminds.utils.PDFGenerator;
 
 @RestController
 @RequestMapping("api/applications")
+@RequiredArgsConstructor
 public class ApplicationController {
 
 	private final ApplicationService applicationService;
-
-	public ApplicationController(ApplicationService applicationService) {
-		super();
-		this.applicationService = applicationService;
-	}
+	private final RedisTemplate<String, Object> template;
 
 	@GetMapping
-	public ResponseEntity<List<ApplicationResponseDTO>> getAllApplication() {
-		return ResponseEntity.ok(applicationService.getAllApplication());
+	public ResponseEntity<List<ApplicationResponseDTO>> getAllApplication(@RequestHeader HttpHeaders headers) {
+		String token = headers.getFirst(HttpHeaders.AUTHORIZATION);
+		boolean check = template.opsForValue().get(token.split(" ")[1]) == null;
+		if (!check) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} else {
+			return ResponseEntity.ok(applicationService.getAllApplication());
+		}
 	}
 
 	@GetMapping("{id}")
